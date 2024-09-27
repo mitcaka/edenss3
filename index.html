@@ -11,6 +11,9 @@
     <noscript
       ><link rel="stylesheet" href="assets/css/noscript.css"
     /></noscript>
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="EDEN SS3" id="og-title" />
+    <meta property="og:description" content="Rank: [Giá trị Rank]\nPlayer Count: [Giá trị Player Count]\nStatus: [Giá trị Status]" />
   </head>
   <body class="is-preload">
     <!-- Page Wrapper -->
@@ -196,17 +199,17 @@
                 ><img src="images/gallery/thumbs/7.jpg" alt=""
               /></a>
               <a
-                href="images/gallery/fulls/14.png"
+                href="images/gallery/fulls/17.png"
                 class="image filtered span-3"
                 data-position="top"
-                ><img src="images/gallery/thumbs/14.png" alt=""
+                ><img src="images/gallery/thumbs/17.png" alt=""
               /></a>
             </div>
             <a
-              href="images/gallery/fulls/17.png"
+              href="images/gallery/fulls/14.png"
               class="image filtered span-2-5"
               data-position="right"
-              ><img src="images/gallery/thumbs/17.png" alt=""
+              ><img src="images/gallery/thumbs/14.png" alt=""
             /></a>
           </div>
         </section>
@@ -243,48 +246,58 @@
     </div>
 
     <!-- Scripts -->
+    <audio id="background-music" autoplay loop>
+      <source src="music/intro.mp3" type="audio/mpeg">
+   </audio>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/js/browser.min.js"></script>
     <script src="assets/js/breakpoints.min.js"></script>
     <script src="assets/js/main.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-          const serverId = "21618626";
-          const url = `https://api.battlemetrics.com/servers/${serverId}`;
-  
-          fetch(url, {
-              method: "GET",
-              headers: {
-                  Accept: "application/vnd.api+json",
-              },
-          })
-              .then((response) => {
-                  if (!response.ok) {
-                      throw new Error(
-                          "Network response was not ok " + response.statusText
-                      );
-                  }
-                  return response.json();
-              })
-              .then((data) => {
-                  const server = data.data.attributes;
-                  const statusText = server.status === "online" ? 
-                      '<span class="status online">Online</span>' : 
-                      '<span class="status offline">Dead</span>';
-                  
-                  document.getElementById("serverData").innerHTML = `
-                      <div class="data-item" style="margin-bottom: 7px;margin-top: 7px;"><span class="label">Rank:</span> ${server.rank || "Không có dữ liệu"}</div>
-                      <div class="data-item" style="margin-bottom: 7px;margin-top: 7px;"><span class="label">Player Count:</span> ${server.players}/${server.maxPlayers} </div>
-                      <div class="data-item" style="margin-bottom: 7px;margin-top: 7px;"><span class="label">Address:</span> ${server.ip}:16261</div>
-                      <div class="data-item" style="margin-bottom: 7px;margin-top: 7px;"><span class="label">Status:</span> ${statusText}</div>
-                  `;
-              })
-              .catch((error) => {
-                  console.error("Có lỗi xảy ra:", error);
-                  document.getElementById("serverData").innerText =
-                      "Có lỗi xảy ra: " + error.message;
-              });
-      });
+        const serverId = "21618626";
+        const url = `https://api.battlemetrics.com/servers/${serverId}`;
+
+        fetch(url, {
+            method: "GET",
+            headers: {
+                Accept: "application/vnd.api+json",
+            },
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok " + response.statusText);
+                }
+                return response.json();
+            })
+            .then((data) => {
+                const server = data.data.attributes;
+                const descriptionContent = `
+                    Rank: ${server.rank || "Không có dữ liệu"}
+                    Player Count: ${server.players}/${server.maxPlayers}
+                    Status: ${server.status}
+                `.trim();
+
+                document.querySelector('meta[property="og:description"]').setAttribute("content", descriptionContent);
+
+                const statusText = server.status === "online" ? 
+                    '<span class="status online">Online</span>' : 
+                    '<span class="status offline">Dead</span>';
+                
+                document.getElementById("serverData").innerHTML = `
+                    <div class="data-item" style="margin-bottom: 7px;margin-top: 7px;"><span class="label">Rank:</span> ${server.rank || "Không có dữ liệu"}</div>
+                    <div class="data-item" style="margin-bottom: 7px;margin-top: 7px;"><span class="label">Player Count:</span> ${server.players}/${server.maxPlayers} </div>
+                    <div class="data-item" style="margin-bottom: 7px;margin-top: 7px;"><span class="label">Address:</span> ${server.ip}:16261</div>
+                    <div class="data-item" style="margin-bottom: 7px;margin-top: 7px;"><span class="label">Status:</span> ${statusText}</div>
+                `;
+            })
+            .catch((error) => {
+                console.error("Có lỗi xảy ra:", error);
+                document.getElementById("serverData").innerText = "Có lỗi xảy ra: " + error.message;
+            });
+            const audio = document.getElementById('background-music');
+            audio.volume = 0.5;
+          });
   </script>
   
   <style>

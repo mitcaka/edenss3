@@ -13,8 +13,8 @@
     /></noscript>
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="EDEN SS3" id="og-title" />
-    <meta property="og:description" content="Rank: [Giá trị Rank]\nPlayer Count: [Giá trị Player Count]\nStatus: [Giá trị Status]" />
-    <meta property="og:url" content="https://mitcaka.github.io/edenss3/" />
+    <meta property="og:description" content="Chào mừng đến với Zomboid vô tận Eden" />
+    <meta property="og:url" content="https://edenss3.io.vn/" />
   </head>
   <body class="is-preload">
     <!-- Page Wrapper -->
@@ -256,7 +256,7 @@
     <script src="assets/js/main.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        const serverId = "21618626";
+        const serverId = "29260151";
         const url = `https://api.battlemetrics.com/servers/${serverId}`;
 
         fetch(url, {
@@ -273,17 +273,9 @@
             })
             .then((data) => {
                 const server = data.data.attributes;
-                const descriptionContent = `
-                    Rank: ${server.rank || "Không có dữ liệu"}
-                    Player Count: ${server.players}/${server.maxPlayers}
-                    Status: ${server.status}
-                `.trim();
-
-                document.querySelector('meta[property="og:description"]').setAttribute("content", descriptionContent);
-
                 const statusText = server.status === "online" ? 
                     '<span class="status online">Online</span>' : 
-                    '<span class="status offline">Dead</span>';
+                    '<span class="status offline">Offline</span>';
                 
                 document.getElementById("serverData").innerHTML = `
                     <div class="data-item" style="margin-bottom: 7px;margin-top: 7px;"><span class="label">Rank:</span> ${server.rank || "Không có dữ liệu"}</div>
